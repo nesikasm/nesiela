@@ -1,1 +1,85 @@
-<h1>good morning</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Info</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 10px; text-align: left; }
+        th { background: #f4f4f4; cursor: pointer; }
+        input, button { margin: 5px; padding: 8px; }
+    </style>
+</head>
+<body>
+
+    <h2>Sports and Training</h2>
+
+    <h3>Popular Sports</h3>
+    <ul id="sports-list">
+        <li>Cricket</li>
+        <li>Basketball</li>
+        <li>Tennis</li>
+    </ul>
+    <input id="newSport" placeholder="Enter sport"><button onclick="addItem('sports-list', 'newSport')">Add</button>
+
+    <h3>Training Steps</h3>
+    <ol id="training-steps">
+        <li>Regular Practice</li>
+        <li>Strength & Conditioning</li>
+    </ol>
+    <input id="newStep" placeholder="Enter step"><button onclick="addItem('training-steps', 'newStep')">Add</button>
+
+    <h3>Sports Comparison</h3>
+    <table id="sports-table">
+        <tr>
+            <th onclick="sortTable(0)">Sport</th>
+            <th onclick="sortTable(1)">Type</th>
+            <th onclick="sortTable(2)">Players</th>
+        </tr>
+        <tr><td>Cricket</td><td>Team</td><td>11</td></tr>
+        <tr><td>Tennis</td><td>Individual</td><td>1-2</td></tr>
+    </table>
+
+    <h3>Add Sport</h3>
+    <input id="sport" placeholder="Sport"> 
+    <input id="type" placeholder="Type"> 
+    <input id="players" placeholder="Players"> 
+    <button onclick="addSport()">Add</button>
+
+    <script>
+        function addItem(listId, inputId) {
+            let input = document.getElementById(inputId);
+            if (input.value.trim()) {
+                let li = document.createElement("li");
+                li.textContent = input.value;
+                document.getElementById(listId).appendChild(li);
+                input.value = "";
+            } else alert("Enter valid input!");
+        }
+
+        function addSport() {
+            let table = document.getElementById("sports-table");
+            let sport = document.getElementById("sport").value;
+            let type = document.getElementById("type").value;
+            let players = document.getElementById("players").value;
+            if (sport && type && players) {
+                let row = table.insertRow();
+                row.innerHTML = `<td>${sport}</td><td>${type}</td><td>${players}</td>`;
+                document.getElementById("sport").value = "";
+                document.getElementById("type").value = "";
+                document.getElementById("players").value = "";
+            } else alert("Fill all fields!");
+        }
+
+        function sortTable(col) {
+            let table = document.getElementById("sports-table");
+            let rows = Array.from(table.rows).slice(1);
+            rows.sort((a, b) => a.cells[col].textContent.localeCompare(b.cells[col].textContent));
+            rows.forEach(row => table.appendChild(row));
+        }
+    </script>
+
+</body>
+</html>
